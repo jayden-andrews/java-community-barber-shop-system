@@ -14,7 +14,6 @@ public class BobbyPatient {
         this.patientId = generatePatientId(new Random());
     }
 
-
     public String getName() {
         return name;
     }
@@ -37,6 +36,11 @@ public class BobbyPatient {
 
     public String generatePatientId(Random random) {
         return name.substring(0, 3).toUpperCase() + random.nextInt(10000, 100000);
+    }
+
+    @Override
+    public String toString() {
+        return "\n(Name: " + name + ", Phone: " + phoneNumber + ", PatientId: " + patientId + ")";
     }
 
 

@@ -2,7 +2,7 @@ package org.codedifferently;
 import java.util.ArrayList;
 
 public class AmaniAppointment {
-    private ArrayList<AmaniAppointment> appointments = new ArrayList<AmaniAppointment>();
+    private ArrayList<AmaniAppointment> appointments = new ArrayList<>();
     private String name;
     private String haircut;
 
@@ -10,6 +10,10 @@ public class AmaniAppointment {
     public AmaniAppointment(String name, String haircut) {
         this.name = name;
         this.haircut = haircut;
+    }
+
+    public static void appointmentMenu() {
+        // Code goes here
     }
 
     public void scheduleAppointment(BobbyPatient customer) {
