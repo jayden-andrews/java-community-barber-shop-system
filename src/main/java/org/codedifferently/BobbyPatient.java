@@ -1,5 +1,4 @@
 package org.codedifferently;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class BobbyPatient {
