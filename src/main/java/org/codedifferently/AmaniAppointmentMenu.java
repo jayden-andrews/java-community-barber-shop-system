@@ -2,31 +2,31 @@ package org.codedifferently;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AmaniAppointment {
+public class AmaniAppointmentMenu {
     private static final String[] TIME_SLOTS = {"9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM",
     "11:00 AM", "11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
     "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM"};
-    private static final ArrayList<AmaniAppointment> appointments = new ArrayList<>();
+    private static final ArrayList<AmaniAppointmentMenu> appointments = new ArrayList<>();
     private String name;
     private String haircut;
     private String timeSlot;
     private String patientId;
 
     // Constructor
-    public AmaniAppointment(BobbyPatient customer, String haircut, String timeSlot) {
+    public AmaniAppointmentMenu(BobbyPatient customer, String haircut, String timeSlot) {
         this.name = customer.getName();
         this.haircut = haircut;
         this.timeSlot = timeSlot;
         this.patientId = customer.getPatientId();
     }
 
-    public static void appointmentMenu(BobbyPatient customer) {
+    public static void AmaniAppointmentMenu(BobbyPatient customer) {
         Scanner scanner = new Scanner(System.in);
-        appointmentMenu(customer, scanner);
+        AmaniAppointmentMenu(customer, scanner);
     }
 
 
-    public static void appointmentMenu(BobbyPatient customer, Scanner scanner) {
+    public static void AmaniAppointmentMenu(BobbyPatient customer, Scanner scanner) {
         boolean running = true;
 
         while (running) {
@@ -40,18 +40,13 @@ public class AmaniAppointment {
 
             int choice = readInt(scanner);
 
-            AmaniAppointment temp = new AmaniAppointment(customer, "N/A", "N/A");
+            AmaniAppointmentMenu temp = new AmaniAppointmentMenu(customer, "N/A", "N/A");
             switch (choice) {
                 case 1 -> temp.scheduleAppointment(customer, scanner);
-                break;
                 case 2 -> temp.cancelAppointment(customer);
-                break;
                 case 3 -> temp.checkIn(customer);
-                break;
                 case 4 -> temp.viewSchedule();
-                break;
                 case 0 -> running = false;
-                break;
                 default -> System.out.println("Invalid option.");
             }
         }
@@ -70,7 +65,7 @@ public class AmaniAppointment {
             return;
         }
 
-        AmaniAppointment existing = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointmentMenu existing = findAppointmentByPatient(customer.getPatientId());
         if (existing != null) {
             System.out.println("You already have an appointment at " + existing.timeSlot + ".");
             System.out.println("Cancel it first if you want to reschedule.");
@@ -84,7 +79,7 @@ public class AmaniAppointment {
             haircutInput = scanner.nextLine().trim();
         }
 
-        appointments.add(new AmaniAppointment(customer, haircutInput, slot));
+        appointments.add(new AmaniAppointmentMenu(customer, haircutInput, slot));
         System.out.println("Booked! " + customer.getName() + " at " + slot + " for " + haircutInput + ".");
 
     }
@@ -92,7 +87,7 @@ public class AmaniAppointment {
     public void cancelAppointment(BobbyPatient customer) {
         System.out.println("\n--- Cancel Appointment ---");
 
-        AmaniAppointment appt = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointmentMenu appt = findAppointmentByPatient(customer.getPatientId());
         if (appt == null) {
             System.out.println("No appointment found for " + customer.getName() + ".");
             return;
@@ -105,7 +100,7 @@ public class AmaniAppointment {
     public void checkIn(BobbyPatient customer) {
         System.out.println("\n--- Check In ---");
 
-        AmaniAppointment appt = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointmentMenu appt = findAppointmentByPatient(customer.getPatientId());
         if (appt == null) {
             System.out.println("No appointment found for " + customer.getName() + ".");
             return;
@@ -118,7 +113,7 @@ public class AmaniAppointment {
         System.out.println("\n--- Full Schedule ---");
 
         for (String slot : TIME_SLOTS) {
-            AmaniAppointment appt = findAppointmentBySlot(slot);
+            AmaniAppointmentMenu appt = findAppointmentBySlot(slot);
             if (appt == null) {
                 System.out.println(slot + " -> Available");
             } else {
@@ -152,8 +147,8 @@ public class AmaniAppointment {
         return val;
     }
 
-    private static AmaniAppointment findAppointmentBySlot(String slot) {
-        for (AmaniAppointment appt : appointments) {
+    private static AmaniAppointmentMenu findAppointmentBySlot(String slot) {
+        for (AmaniAppointmentMenu appt : appointments) {
             if (appt.timeSlot.equals(slot)) {
                 return appt;
             }
@@ -161,8 +156,8 @@ public class AmaniAppointment {
         return null;
     }
 
-    private static AmaniAppointment findAppointmentByPatient(String patientId) {
-        for (AmaniAppointment appt : appointments) {
+    private static AmaniAppointmentMenu findAppointmentByPatient(String patientId) {
+        for (AmaniAppointmentMenu appt : appointments) {
             if (appt.patientId.equals(patientId)) {
                 return appt;
             }
