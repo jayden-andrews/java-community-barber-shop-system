@@ -5,7 +5,6 @@ public class BobbyPatient {
     private String name;
     private String phoneNumber;
     private final String patientId;
-    private String haircut;
 
     // Constructor
     public BobbyPatient(String name, String phoneNumber) {
@@ -18,16 +17,8 @@ public class BobbyPatient {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getPatientId() {
@@ -42,6 +33,4 @@ public class BobbyPatient {
     public String toString() {
         return "\n(Name: " + name + ", Phone: " + phoneNumber + ", PatientId: " + patientId + ")";
     }
-
-
 }
