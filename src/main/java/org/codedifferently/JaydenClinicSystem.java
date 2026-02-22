@@ -12,7 +12,7 @@ public class JaydenClinicSystem {
 
     // Displays the main menu and processes user selections until the user quits.
     public static void displayOptions(Scanner sc) {
-        System.out.println("Welcome! What would you like to do today? (Enter a number)\n");
+        System.out.println("Welcome! What would you like to do today? (Enter a number)");
         int input;
 
         // Stores appointment data for generating a journal upon exit.
@@ -20,7 +20,7 @@ public class JaydenClinicSystem {
 
         do {
             // Displays the main menu options to the user.
-            System.out.println("Barber Shop Management System");
+            System.out.println("\n=== Barber Shop Management Menu ===");
             System.out.println("1) Add a new customer");
             System.out.println("2) View all customers");
             System.out.println("3) Manage appointment for a customer");
@@ -55,7 +55,7 @@ public class JaydenClinicSystem {
                 // Displays the full list of registered customers.
                 case 2:
                     System.out.println("\nCustomers");
-                    System.out.println(getCustomers() + "\n");
+                    System.out.println(getCustomers());
                     break;
                 // Manages appointment scheduling for an existing customer.
                 case 3:
@@ -64,7 +64,7 @@ public class JaydenClinicSystem {
                     if (customer != null) {
                         appointments = AmaniAppointmentMenu.appointmentMenu(customer, sc);
                     } else {
-                        System.out.println("Customer not in database. Please add them first.\n");
+                        System.out.println("\nCustomer not in database. Please add them first.");
                     }
                     break;
                 // Searches for a customer using their phone number.
@@ -74,15 +74,16 @@ public class JaydenClinicSystem {
 
                     // Prints out customer if found.
                     if (customer2 != null) {
-                        System.out.println("\nCustomer found: " + customer2 + "\n");
+                        System.out.println("\nCustomer found: " + customer2);
                     // Tells the user that the customer was not found if they do not exist.
                     } else {
-                        System.out.println("Customer not found.");
+                        System.out.println("\nCustomer not found.");
                     }
                     break;
                 // Exits the system and prints a journal of completed appointments.
                 case 0:
-                    if (appointments != null) {
+                    // Prints out electronic journal if appointments have happened today.
+                    if (appointments != null && !(appointments.isEmpty())) {
                         System.out.println("\nElectronic Journal of Completed Appointments");
                         for (AmaniAppointmentMenu appt: appointments) {
                             if (appt.getCheckedIn()) {
@@ -97,7 +98,7 @@ public class JaydenClinicSystem {
 
                 // Handles invalid menu selections.
                 default:
-                    System.out.println("\nPlease select a valid option.\n");
+                    System.out.println("\nPlease select a valid option.");
             }
         // Stopping condition. Program will exit when the user inputs 0.
         } while (input != 0);
@@ -106,6 +107,7 @@ public class JaydenClinicSystem {
     // Adds a new customer to the customer list.
     public static void addCustomer(BobbyPatient customer) {
         customers.add(customer);
+        System.out.println("\nCustomer " + customer.getName() + " (" + customer.getPatientId() + ") added!");
     }
 
     // Returns the list of all registered customers.
@@ -124,20 +126,21 @@ public class JaydenClinicSystem {
         // Returns null if the customer is not found.
         if (customersFound.isEmpty()) {
             return null;
+        // Returns the customer if there are no duplicate phoneNumber.
         } else if (customersFound.size() == 1) {
             return customersFound.getFirst();
+        // Prompts the user to select by patient id since more than one customer used the same phone number.
         } else {
+            System.out.println("\nMultiple customers found: " + customersFound + "\n");
             while(true) {
-                System.out.println("Multiple customers found: " + customersFound);
                 System.out.print("Enter patient id: ");
                 String id = sc.nextLine();
                 for (BobbyPatient customer : customers) {
                     if (customer.getPatientId().equals(id)) {
                         return customer;
-                    } else {
-                        System.out.println("Invalid patient id");
                     }
                 }
+                System.out.println("Invalid patient id. Try again.\n");
             }
         }
     }
