@@ -126,7 +126,7 @@ public class JaydenClinicSystem {
         // Returns null if the customer is not found.
         if (customersFound.isEmpty()) {
             return null;
-        // Returns the customer if there are no duplicate phoneNumber.
+        // Returns the customer if there are no duplicate phone numbers.
         } else if (customersFound.size() == 1) {
             return customersFound.getFirst();
         // Prompts the user to select by patient id since more than one customer used the same phone number.
