@@ -66,8 +66,8 @@ public class JaydenClinicSystem {
                     }
                     break;
                 case 0:
-                    System.out.println("\nRecords");
                     if (appointments != null) {
+                        System.out.println("\nElectronic Journal of Completed Appointments");
                         for (AmaniAppointmentMenu appt: appointments) {
                             if (appt.getCheckedIn()) {
                                 System.out.println(appt.getTimeSlot() + " -> [Name: " + appt.getName() + ", " +
