@@ -53,7 +53,7 @@ public class AmaniAppointmentMenu {
             System.out.println("3) Check In");
             System.out.println("4) View Schedule");
             System.out.println("0) Exit");
-            System.out.println("Choose: ");
+            System.out.print("Choose: ");
 
             int choice = readInt(scanner);
 
