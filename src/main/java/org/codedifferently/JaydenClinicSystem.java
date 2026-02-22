@@ -60,7 +60,7 @@ public class JaydenClinicSystem {
                 // Manages appointment scheduling for an existing customer.
                 case 3:
                     phoneNumber = formatPhoneNumber(pattern, sc);
-                    BobbyPatient customer = searchCustomer(phoneNumber);
+                    BobbyPatient customer = searchCustomer(phoneNumber, sc);
                     if (customer != null) {
                         appointments = AmaniAppointmentMenu.appointmentMenu(customer, sc);
                     } else {
@@ -70,7 +70,7 @@ public class JaydenClinicSystem {
                 // Searches for a customer using their phone number.
                 case 4:
                     phoneNumber = formatPhoneNumber(pattern, sc);
-                    BobbyPatient customer2 = searchCustomer(phoneNumber);
+                    BobbyPatient customer2 = searchCustomer(phoneNumber, sc);
 
                     // Prints out customer if found.
                     if (customer2 != null) {
@@ -114,14 +114,32 @@ public class JaydenClinicSystem {
     }
 
     // Searches for a customer using their phone number and returns the match if found.
-    public static BobbyPatient searchCustomer(String phoneNumber) {
+    public static BobbyPatient searchCustomer(String phoneNumber, Scanner sc) {
+        ArrayList<BobbyPatient> customersFound = new ArrayList<>();
         for (BobbyPatient customer : customers) {
             if (customer.getPhoneNumber().equals(phoneNumber)) {
-                return customer;
+                customersFound.add(customer);
             }
         }
         // Returns null if the customer is not found.
-        return null;
+        if (customersFound.isEmpty()) {
+            return null;
+        } else if (customersFound.size() == 1) {
+            return customersFound.getFirst();
+        } else {
+            while(true) {
+                System.out.println("Multiple customers found: " + customersFound);
+                System.out.print("Enter patient id: ");
+                String id = sc.nextLine();
+                for (BobbyPatient customer : customers) {
+                    if (customer.getPatientId().equals(id)) {
+                        return customer;
+                    } else {
+                        System.out.println("Invalid patient id");
+                    }
+                }
+            }
+        }
     }
 
     // Validates and formats the user’s phone number input using the provided pattern.
