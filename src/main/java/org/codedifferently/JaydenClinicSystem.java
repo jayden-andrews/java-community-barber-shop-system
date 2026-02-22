@@ -9,16 +9,17 @@ public class JaydenClinicSystem {
     public static void displayOptions(Scanner sc) {
         System.out.println("Welcome! What would you like to do today? (Enter a number)\n");
         int input;
+        ArrayList<AmaniAppointmentMenu> appointments = null;
 
         do {
             // Prints the menu.
             System.out.println("Barber Shop Management System");
-            System.out.println("1. Add a new customer.");
-            System.out.println("2. View all customers.");
-            System.out.println("3. Manage appointment.");
-            System.out.println("4. Search for a customer.");
-            System.out.println("5. Quit");
-            System.out.print("Selection: ");
+            System.out.println("1) Add a new customer.");
+            System.out.println("2) View all customers.");
+            System.out.println("3) Manage appointment for a customer.");
+            System.out.println("4) Search for a customer.");
+            System.out.println("0) Quit");
+            System.out.print("Choose: ");
 
             // Validates the input.
             if (sc.hasNextInt()) {
@@ -45,26 +46,42 @@ public class JaydenClinicSystem {
                     System.out.println(getCustomers());
                     break;
                 case 3:
-                    AmaniAppointment.appointmentMenu();
+                    phoneNumber = formatPhoneNumber(pattern, sc);
+                    BobbyPatient customer = searchCustomer(phoneNumber);
+                    if (customer != null) {
+                        appointments = AmaniAppointmentMenu.appointmentMenu(customer, sc);
+                    } else {
+                        System.out.println("Customer not in database. Please add them first.\n");
+                    }
                     break;
                 case 4:
                     phoneNumber = formatPhoneNumber(pattern, sc);
-                    BobbyPatient customer = searchCustomer(phoneNumber);
+                    BobbyPatient customer2 = searchCustomer(phoneNumber);
 
-                    if (customer != null) {
+                    if (customer2 != null) {
                         System.out.print("Customer found:");
-                        System.out.println(customer + "\n");
+                        System.out.println(customer2 + "\n");
                     } else {
                         System.out.println("Customer not found.");
                     }
                     break;
-                case 5:
+                case 0:
+                    System.out.println("\nRecords");
+                    if (appointments != null) {
+                        for (AmaniAppointmentMenu appt: appointments) {
+                            if (appt.getCheckedIn()) {
+                                System.out.println(appt.getTimeSlot() + " -> [Name: " + appt.getName() + ", " +
+                                        "Patient Id: " + appt.getPatientId() + ", " +
+                                        "Haircut: " + appt.getHaircut() + "]");
+                            }
+                        }
+                    }
                     System.out.println("\nExiting system...");
                     break;
                 default:
                     System.out.println("\nPlease select a valid option.\n");
             }
-        } while (input != 5);
+        } while (input != 0);
     }
 
     public static void addCustomer(BobbyPatient customer) {

@@ -11,6 +11,7 @@ public class AmaniAppointmentMenu {
     private String haircut;
     private String timeSlot;
     private String patientId;
+    private boolean checkedIn;
 
     // Constructor
     public AmaniAppointmentMenu(BobbyPatient customer, String haircut, String timeSlot) {
@@ -18,15 +19,10 @@ public class AmaniAppointmentMenu {
         this.haircut = haircut;
         this.timeSlot = timeSlot;
         this.patientId = customer.getPatientId();
+        this.checkedIn = false;
     }
 
-    public static void AmaniAppointmentMenu(BobbyPatient customer) {
-        Scanner scanner = new Scanner(System.in);
-        AmaniAppointmentMenu(customer, scanner);
-    }
-
-
-    public static void AmaniAppointmentMenu(BobbyPatient customer, Scanner scanner) {
+    public static ArrayList<AmaniAppointmentMenu> appointmentMenu(BobbyPatient customer, Scanner scanner) {
         boolean running = true;
 
         while (running) {
@@ -51,7 +47,7 @@ public class AmaniAppointmentMenu {
             }
         }
 
-
+        return appointments;
     }
 
     public void scheduleAppointment(BobbyPatient customer, Scanner scanner) {
@@ -105,7 +101,7 @@ public class AmaniAppointmentMenu {
             System.out.println("No appointment found for " + customer.getName() + ".");
             return;
         }
-
+        appt.setCheckedIn(true);
         System.out.println("Checked in: " + appt.name + " | " + appt.timeSlot + " | " + appt.haircut);
     }
 
@@ -117,7 +113,11 @@ public class AmaniAppointmentMenu {
             if (appt == null) {
                 System.out.println(slot + " -> Available");
             } else {
-                System.out.println(slot + " -> BOOKED " + appt.name + " (" + appt.haircut + ")");
+                if (appt.checkedIn) {
+                    System.out.println(slot + " -> BOOKED " + appt.name + " (" + appt.haircut + ") Checked In?: Yes" );
+                } else {
+                    System.out.println(slot + " -> BOOKED " + appt.name + " (" + appt.haircut + ") Checked In?: No" );
+                }
             }
         }
     }
@@ -169,5 +169,29 @@ public class AmaniAppointmentMenu {
     public String toString() {
         return "Appointment{name='" + name + "', patientId='" + patientId + "', timeSlot='" + timeSlot + "', haicut='"
                 + haircut + "'}";
+    }
+
+    public boolean getCheckedIn() {
+        return this.checkedIn;
+    }
+
+    public void setCheckedIn(boolean checkedIn) {
+        this.checkedIn = checkedIn;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getPatientId() {
+        return this.patientId;
+    }
+
+    public String getHaircut() {
+        return this.haircut;
+    }
+
+    public String getTimeSlot() {
+        return this.timeSlot;
     }
 }
