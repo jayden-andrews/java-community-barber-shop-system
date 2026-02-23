@@ -175,7 +175,7 @@ public class AmaniAppointment {
         System.out.println("Available time slots:");
 
         for (int i = 0; i < TIME_SLOTS.length; i++) {
-            System.out.println((i + 1) + ")" + TIME_SLOTS[i]);
+            System.out.println((i + 1) + ") " + TIME_SLOTS[i]);
         }
 
         System.out.println("Pick a slot number (1-" + TIME_SLOTS.length + "): ");

@@ -37,19 +37,19 @@ public class JaydenClinicSystem {
             sc.nextLine();
 
             // Defines the regex pattern used to validate phone number input.
-            String regex = "^\\+?1?\\D*?(\\d{3})\\D*?(\\d{3})\\D*?(\\d{4})$";
+            String phoneRegex = "^\\+?1?\\D*?(\\d{3})\\D*?(\\d{3})\\D*?(\\d{4})$";
 
             // Compiles the regex string into a Pattern object.
-            Pattern pattern = Pattern.compile(regex);
+            Pattern phonePattern = Pattern.compile(phoneRegex);
 
+            String name;
             String phoneNumber;
 
             switch (input) {
                 // Handles the creation and storage of a new customer.
                 case 1:
-                    System.out.print("\nEnter your name: ");
-                    String name = sc.nextLine();
-                    phoneNumber = formatPhoneNumber(pattern, sc);
+                    name = validateName(sc);
+                    phoneNumber = formatPhoneNumber(phonePattern, sc);
                     addCustomer(new BobbyPatient(name, phoneNumber));
                     break;
                 // Displays the full list of registered customers.
@@ -59,7 +59,7 @@ public class JaydenClinicSystem {
                     break;
                 // Manages appointment scheduling for an existing customer.
                 case 3:
-                    phoneNumber = formatPhoneNumber(pattern, sc);
+                    phoneNumber = formatPhoneNumber(phonePattern, sc);
                     BobbyPatient customer = searchCustomer(phoneNumber, sc);
                     if (customer != null) {
                         appointments = AmaniAppointment.appointmentMenu(customer, sc);
@@ -69,7 +69,7 @@ public class JaydenClinicSystem {
                     break;
                 // Searches for a customer using their phone number.
                 case 4:
-                    phoneNumber = formatPhoneNumber(pattern, sc);
+                    phoneNumber = formatPhoneNumber(phonePattern, sc);
                     BobbyPatient customer2 = searchCustomer(phoneNumber, sc);
 
                     // Prints out customer if found.
@@ -145,11 +145,31 @@ public class JaydenClinicSystem {
         }
     }
 
+    // Validates that the user's name input contains only permitted characters.
+    public static String validateName(Scanner sc) {
+        // Repeats continuously until valid input is provided.
+        while (true) {
+            // Prompts the user to enter their name.
+            System.out.print("\nEnter a name: ");
+            String name = sc.nextLine();
+
+            // Checks whether the input matches the required name pattern.
+            // Allows letters and optionally single spaces, hyphens, or apostrophes between words.
+            if (name.matches("^[a-zA-Z]+([ '-][a-zA-Z]+)*$")) {
+                // Returns the validated name if it meets the pattern requirements.
+                return name;
+            } else {
+                // Displays an error message if validation fails.
+                System.out.println("\nInvalid name. Please use letters only.");
+            }
+        }
+    }
+
     // Validates and formats the user’s phone number input using the provided pattern.
     public static String formatPhoneNumber(Pattern pattern, Scanner sc) {
         while (true) {
             // Prompts the user to enter their phone number.
-            System.out.print("Enter your phone number: ");
+            System.out.print("Enter a phone number: ");
             String phoneNumber = sc.nextLine();
 
             // Creates a Matcher object to compare input against the pattern.
