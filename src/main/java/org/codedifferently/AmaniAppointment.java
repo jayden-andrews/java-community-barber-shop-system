@@ -97,19 +97,19 @@ public class AmaniAppointment {
         }
 
         // Prompts the user to enter the haircut that they want.
-        System.out.println("Enter haircut/service (ex: Fade, Trim, Lineup): ");
+        System.out.print("Enter haircut/service (ex: Fade, Trim, Lineup): ");
         String haircutInput = scanner.nextLine().trim();
 
         // Validates that the haircut input is not empty.
         while (haircutInput.isEmpty()) {
-            System.out.println("Service cannot be empty. Enter haircut/service: ");
+            System.out.print("Service cannot be empty. Enter haircut/service: ");
             haircutInput = scanner.nextLine().trim();
         }
 
         // Adds the new appointment to the appointments list.
         appointments.add(new AmaniAppointment(customer, haircutInput, slot));
 
-        System.out.println("Booked! " + customer.getName() + " at " + slot + " for " + haircutInput + ".");
+        System.out.println("\nBooked! " + customer.getName() + " at " + slot + " for " + haircutInput + ".");
     }
 
     // Cancels customer’s existing appointment if one exists.
@@ -178,7 +178,7 @@ public class AmaniAppointment {
             System.out.println((i + 1) + ") " + TIME_SLOTS[i]);
         }
 
-        System.out.println("Pick a slot number (1-" + TIME_SLOTS.length + "): ");
+        System.out.print("Pick a slot number (1-" + TIME_SLOTS.length + "): ");
         int slotNum = readInt(scanner);
 
         // Validates that the selected slot number is within range.
