@@ -16,7 +16,7 @@ public class JaydenClinicSystem {
         int input;
 
         // Stores appointment data for generating a journal upon exit.
-        ArrayList<AmaniAppointmentMenu> appointments = null;
+        ArrayList<AmaniAppointment> appointments = null;
 
         do {
             // Displays the main menu options to the user.
@@ -62,7 +62,7 @@ public class JaydenClinicSystem {
                     phoneNumber = formatPhoneNumber(pattern, sc);
                     BobbyPatient customer = searchCustomer(phoneNumber, sc);
                     if (customer != null) {
-                        appointments = AmaniAppointmentMenu.appointmentMenu(customer, sc);
+                        appointments = AmaniAppointment.appointmentMenu(customer, sc);
                     } else {
                         System.out.println("\nCustomer not in database. Please add them first.");
                     }
@@ -85,7 +85,7 @@ public class JaydenClinicSystem {
                     // Prints out electronic journal if appointments have happened today.
                     if (appointments != null && !(appointments.isEmpty())) {
                         System.out.println("\nElectronic Journal of Completed Appointments");
-                        for (AmaniAppointmentMenu appt: appointments) {
+                        for (AmaniAppointment appt: appointments) {
                             if (appt.getCheckedIn()) {
                                 System.out.println(appt.getTimeSlot() + " -> [Name: " + appt.getName() + ", " +
                                         "Patient Id: " + appt.getPatientId() + ", " +
@@ -133,7 +133,7 @@ public class JaydenClinicSystem {
         } else {
             System.out.println("\nMultiple customers found: " + customersFound + "\n");
             while(true) {
-                System.out.print("Enter patient id: ");
+                System.out.print("Enter patient id (CASE SENSITIVE): ");
                 String id = sc.nextLine();
                 for (BobbyPatient customer : customers) {
                     if (customer.getPatientId().equals(id)) {

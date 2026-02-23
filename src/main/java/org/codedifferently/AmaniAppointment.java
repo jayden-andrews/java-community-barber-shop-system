@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // Defines the AmaniAppointmentMenu class that manages appointment scheduling and tracking.
-public class AmaniAppointmentMenu {
+public class AmaniAppointment {
 
     // Stores all available appointment time slots for the day.
     private static final String[] TIME_SLOTS = {
@@ -16,7 +16,7 @@ public class AmaniAppointmentMenu {
     };
 
     // Stores all scheduled appointments in a shared list.
-    private static final ArrayList<AmaniAppointmentMenu> appointments = new ArrayList<>();
+    private static final ArrayList<AmaniAppointment> appointments = new ArrayList<>();
 
     // Stores the patient’s name for the appointment.
     private String name;
@@ -34,7 +34,7 @@ public class AmaniAppointmentMenu {
     private boolean checkedIn;
 
     // Constructor to instantiate a new AmaniAppointmentMenu object using patient and appointment details.
-    public AmaniAppointmentMenu(BobbyPatient customer, String haircut, String timeSlot) {
+    public AmaniAppointment(BobbyPatient customer, String haircut, String timeSlot) {
         this.name = customer.getName();
         this.haircut = haircut;
         this.timeSlot = timeSlot;
@@ -43,7 +43,7 @@ public class AmaniAppointmentMenu {
     }
 
     // Displays the appointment menu and processes user selections until the user exits.
-    public static ArrayList<AmaniAppointmentMenu> appointmentMenu(BobbyPatient customer, Scanner scanner) {
+    public static ArrayList<AmaniAppointment> appointmentMenu(BobbyPatient customer, Scanner scanner) {
         boolean running = true;
 
         while (running) {
@@ -58,7 +58,7 @@ public class AmaniAppointmentMenu {
             int choice = readInt(scanner);
 
             // Creates a temporary appointment object to access instance methods.
-            AmaniAppointmentMenu temp = new AmaniAppointmentMenu(customer, "N/A", "N/A");
+            AmaniAppointment temp = new AmaniAppointment(customer, "N/A", "N/A");
 
             switch (choice) {
                 case 1 -> temp.scheduleAppointment(customer, scanner);
@@ -88,7 +88,7 @@ public class AmaniAppointmentMenu {
         }
 
         // Checks whether the patient already has an existing appointment.
-        AmaniAppointmentMenu existing = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointment existing = findAppointmentByPatient(customer.getPatientId());
         // Tells the customer to reschedule if they already have an appointment.
         if (existing != null) {
             System.out.println("You already have an appointment at " + existing.timeSlot + ".");
@@ -107,7 +107,7 @@ public class AmaniAppointmentMenu {
         }
 
         // Adds the new appointment to the appointments list.
-        appointments.add(new AmaniAppointmentMenu(customer, haircutInput, slot));
+        appointments.add(new AmaniAppointment(customer, haircutInput, slot));
 
         System.out.println("Booked! " + customer.getName() + " at " + slot + " for " + haircutInput + ".");
     }
@@ -117,7 +117,7 @@ public class AmaniAppointmentMenu {
         System.out.println("\n--- Cancel Appointment ---");
 
         // Finds the appointment for the customer provided as an argument
-        AmaniAppointmentMenu appt = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointment appt = findAppointmentByPatient(customer.getPatientId());
 
         // Checks whether an appointment exists for the patient.
         if (appt == null) {
@@ -135,7 +135,7 @@ public class AmaniAppointmentMenu {
     public void checkIn(BobbyPatient customer) {
         System.out.println("\n--- Check In ---");
 
-        AmaniAppointmentMenu appt = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointment appt = findAppointmentByPatient(customer.getPatientId());
 
         // Checks whether an appointment exists before checking in.
         if (appt == null) {
@@ -154,7 +154,7 @@ public class AmaniAppointmentMenu {
         System.out.println("\n--- Full Schedule ---");
 
         for (String slot : TIME_SLOTS) {
-            AmaniAppointmentMenu appt = findAppointmentBySlot(slot);
+            AmaniAppointment appt = findAppointmentBySlot(slot);
 
             // Displays availability if no appointment exists for the slot.
             if (appt == null) {
@@ -204,8 +204,8 @@ public class AmaniAppointmentMenu {
     }
 
     // Searches for an appointment by time slot and returns it if found.
-    private static AmaniAppointmentMenu findAppointmentBySlot(String slot) {
-        for (AmaniAppointmentMenu appt : appointments) {
+    private static AmaniAppointment findAppointmentBySlot(String slot) {
+        for (AmaniAppointment appt : appointments) {
             if (appt.timeSlot.equals(slot)) {
                 return appt;
             }
@@ -214,8 +214,8 @@ public class AmaniAppointmentMenu {
     }
 
     // Searches for an appointment by patient ID and returns it if found.
-    private static AmaniAppointmentMenu findAppointmentByPatient(String patientId) {
-        for (AmaniAppointmentMenu appt : appointments) {
+    private static AmaniAppointment findAppointmentByPatient(String patientId) {
+        for (AmaniAppointment appt : appointments) {
             if (appt.patientId.equals(patientId)) {
                 return appt;
             }
