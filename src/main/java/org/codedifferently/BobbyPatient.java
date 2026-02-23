@@ -51,6 +51,6 @@ public class BobbyPatient {
     // Returns a formatted string representation of the customer’s information.
     @Override
     public String toString() {
-        return "\n(Name: " + name + ", Phone: " + phoneNumber + ", PatientId: " + customerId + ")";
+        return "\n(Name: " + name + ", Phone: " + phoneNumber + ", Customer Id: " + customerId + ")";
     }
 }
