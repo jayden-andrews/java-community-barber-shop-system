@@ -18,7 +18,7 @@ public class AmaniAppointment {
     // Stores all scheduled appointments in a shared list.
     private static final ArrayList<AmaniAppointment> appointments = new ArrayList<>();
 
-    // Stores the patient’s name for the appointment.
+    // Stores the customer’s name for the appointment.
     private String name;
 
     // Stores the haircut or service selected for the appointment.
@@ -27,18 +27,18 @@ public class AmaniAppointment {
     // Stores the selected time slot for the appointment.
     private String timeSlot;
 
-    // Stores the unique patient ID associated with the appointment.
-    private String patientId;
+    // Stores the unique customer ID associated with the appointment.
+    private String customerId;
 
-    // Tracks whether the patient has checked in for the appointment.
+    // Tracks whether the customer has checked in for the appointment.
     private boolean checkedIn;
 
-    // Constructor to instantiate a new AmaniAppointmentMenu object using patient and appointment details.
+    // Constructor to instantiate a new AmaniAppointmentMenu object using customer and appointment details.
     public AmaniAppointment(BobbyPatient customer, String haircut, String timeSlot) {
         this.name = customer.getName();
         this.haircut = haircut;
         this.timeSlot = timeSlot;
-        this.patientId = customer.getPatientId();
+        this.customerId = customer.getCustomerId();
         this.checkedIn = false;
     }
 
@@ -74,7 +74,7 @@ public class AmaniAppointment {
         return appointments;
     }
 
-    // Schedules a new appointment if the selected slot and patient are valid.
+    // Schedules a new appointment if the selected slot and customer are valid.
     public void scheduleAppointment(BobbyPatient customer, Scanner scanner) {
         System.out.println("\n--- Schedule Appointment ---");
 
@@ -87,8 +87,8 @@ public class AmaniAppointment {
             return;
         }
 
-        // Checks whether the patient already has an existing appointment.
-        AmaniAppointment existing = findAppointmentByPatient(customer.getPatientId());
+        // Checks whether the customer already has an existing appointment.
+        AmaniAppointment existing = findAppointmentByCustomer(customer.getCustomerId());
         // Tells the customer to reschedule if they already have an appointment.
         if (existing != null) {
             System.out.println("You already have an appointment at " + existing.timeSlot + ".");
@@ -112,14 +112,14 @@ public class AmaniAppointment {
         System.out.println("Booked! " + customer.getName() + " at " + slot + " for " + haircutInput + ".");
     }
 
-    // Cancels the patient’s existing appointment if one exists.
+    // Cancels customer’s existing appointment if one exists.
     public void cancelAppointment(BobbyPatient customer) {
         System.out.println("\n--- Cancel Appointment ---");
 
         // Finds the appointment for the customer provided as an argument
-        AmaniAppointment appt = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointment appt = findAppointmentByCustomer(customer.getCustomerId());
 
-        // Checks whether an appointment exists for the patient.
+        // Checks whether an appointment exists for the customer.
         if (appt == null) {
             System.out.println("No appointment found for " + customer.getName() + ".");
             return;
@@ -131,11 +131,11 @@ public class AmaniAppointment {
         System.out.println("Canceled appointment at " + appt.timeSlot + " for " + customer.getName() + ".");
     }
 
-    // Marks the patient as checked in for their appointment.
+    // Marks the customer as checked in for their appointment.
     public void checkIn(BobbyPatient customer) {
         System.out.println("\n--- Check In ---");
 
-        AmaniAppointment appt = findAppointmentByPatient(customer.getPatientId());
+        AmaniAppointment appt = findAppointmentByCustomer(customer.getCustomerId());
 
         // Checks whether an appointment exists before checking in.
         if (appt == null) {
@@ -213,10 +213,10 @@ public class AmaniAppointment {
         return null;
     }
 
-    // Searches for an appointment by patient ID and returns it if found.
-    private static AmaniAppointment findAppointmentByPatient(String patientId) {
+    // Searches for an appointment by customer ID and returns it if found.
+    private static AmaniAppointment findAppointmentByCustomer(String customerId) {
         for (AmaniAppointment appt : appointments) {
-            if (appt.patientId.equals(patientId)) {
+            if (appt.customerId.equals(customerId)) {
                 return appt;
             }
         }
@@ -226,7 +226,7 @@ public class AmaniAppointment {
     // Returns a formatted string representation of the appointment.
     @Override
     public String toString() {
-        return "Appointment{name='" + name + "', patientId='" + patientId +
+        return "Appointment{name='" + name + "', customerId='" + customerId +
                 "', timeSlot='" + timeSlot + "', haircut='" + haircut + "'}";
     }
 
@@ -240,14 +240,14 @@ public class AmaniAppointment {
         this.checkedIn = checkedIn;
     }
 
-    // Returns the patient’s name associated with the appointment.
+    // Returns the customer’s name associated with the appointment.
     public String getName() {
         return this.name;
     }
 
-    // Returns the patient ID associated with the appointment.
-    public String getPatientId() {
-        return this.patientId;
+    // Returns the customer ID associated with the appointment.
+    public String getCustomerId() {
+        return this.customerId;
     }
 
     // Returns the haircut or service associated with the appointment.

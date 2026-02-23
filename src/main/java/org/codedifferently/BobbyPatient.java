@@ -5,24 +5,24 @@ import java.util.Random;
 // Defines the BobbyPatient class that stores customer information and generates unique IDs.
 public class BobbyPatient {
 
-    // Stores the patient’s full name.
+    // Stores the customer’s full name.
     private String name;
 
-    // Stores the patient’s phone number.
+    // Stores the customer’s phone number.
     private String phoneNumber;
 
     // Stores the unique patient ID that remains constant after creation.
-    private final String patientId;
+    private final String customerId;
 
     /* Constructor to instantiates a new BobbyPatient object using the provided name and phone number.
-       Generates and assigns a unique patient ID during object creation. */
+       Generates and assigns a unique customer ID during object creation. */
     public BobbyPatient(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.patientId = generatePatientId(new Random());
+        this.customerId = generateCustomerId(new Random());
     }
 
-    // Returns the patient’s name.
+    // Returns the customer’s name.
     public String getName() {
         return name;
     }
@@ -33,18 +33,24 @@ public class BobbyPatient {
     }
 
     // Returns the customer’s unique ID.
-    public String getPatientId() {
-        return patientId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    // Generates a unique patient ID using the first three letters of the name and a random five-digit number.
-    public String generatePatientId(Random random) {
-        return name.substring(0, 3).toUpperCase() + random.nextInt(10000, 100000);
+    // Generates a unique customer ID using the first three letters of the name and a random five-digit number.
+    public String generateCustomerId(Random random) {
+        String prefix;
+        if (name.length() >= 3) {
+            prefix = name.substring(0, 3).toUpperCase();
+        } else {
+            prefix = name.toUpperCase();
+        }
+        return prefix + random.nextInt(10000, 100000);
     }
 
     // Returns a formatted string representation of the customer’s information.
     @Override
     public String toString() {
-        return "\n(Name: " + name + ", Phone: " + phoneNumber + ", PatientId: " + patientId + ")";
+        return "\n(Name: " + name + ", Phone: " + phoneNumber + ", PatientId: " + customerId + ")";
     }
 }

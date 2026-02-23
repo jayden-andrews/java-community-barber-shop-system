@@ -88,7 +88,7 @@ public class JaydenClinicSystem {
                         for (AmaniAppointment appt: appointments) {
                             if (appt.getCheckedIn()) {
                                 System.out.println(appt.getTimeSlot() + " -> [Name: " + appt.getName() + ", " +
-                                        "Patient Id: " + appt.getPatientId() + ", " +
+                                        "Customer Id: " + appt.getCustomerId() + ", " +
                                         "Haircut: " + appt.getHaircut() + "]");
                             }
                         }
@@ -107,7 +107,7 @@ public class JaydenClinicSystem {
     // Adds a new customer to the customer list.
     public static void addCustomer(BobbyPatient customer) {
         customers.add(customer);
-        System.out.println("\nCustomer " + customer.getName() + " (" + customer.getPatientId() + ") added!");
+        System.out.println("\nCustomer " + customer.getName() + " (" + customer.getCustomerId() + ") added!");
     }
 
     // Returns the list of all registered customers.
@@ -129,18 +129,18 @@ public class JaydenClinicSystem {
         // Returns the customer if there are no duplicate phone numbers.
         } else if (customersFound.size() == 1) {
             return customersFound.getFirst();
-        // Prompts the user to select by patient id since more than one customer used the same phone number.
+        // Prompts the user to select by customer id since more than one customer used the same phone number.
         } else {
             System.out.println("\nMultiple customers found: " + customersFound + "\n");
             while(true) {
-                System.out.print("Enter patient id (CASE SENSITIVE): ");
+                System.out.print("Enter customer id (CASE SENSITIVE): ");
                 String id = sc.nextLine();
                 for (BobbyPatient customer : customers) {
-                    if (customer.getPatientId().equals(id)) {
+                    if (customer.getCustomerId().equals(id)) {
                         return customer;
                     }
                 }
-                System.out.println("Invalid patient id. Try again.\n");
+                System.out.println("Invalid customer id. Try again.\n");
             }
         }
     }
